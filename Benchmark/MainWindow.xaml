@@ -1,0 +1,49 @@
+﻿<Window x:Class="Benchmark.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Benchmark"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Name="bg_whole">
+        <Grid Name="bg_rectangle" Width="450" Height="400" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Image x:Name="bg_img" Source="./Resources/bg_img.png" Stretch="Fill" MouseDown="btnCreate_Img"></Image>
+        </Grid>
+        
+        <Grid>
+                <ListBox Name="object_list" HorizontalAlignment="Left" Height="200" Width="300" Margin="480,10,0,0" VerticalAlignment="Top"/>
+                <Label Name="lbl_text" Content="Enter Type For Search:" Margin="480,210,0,0" Width="140" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
+                <TextBox Name="tb_search" Margin="620,215,0,0" Width="140" VerticalAlignment="Top" HorizontalAlignment="Left" ></TextBox>
+            </Grid>
+            <Grid>
+                <Button Name="btn_showStatus" Margin="480,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                    <TextBlock TextWrapping="Wrap" Text="Show Status" FontSize="10"></TextBlock>
+                </Button>
+                <Button Name="btn_removeObj" Margin="580,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_removeObj_Click" >
+                    <TextBlock TextWrapping="Wrap" Text="Remove Selected Object" FontSize="10"></TextBlock>
+                </Button>
+                <Button Name="btn_searchType" Margin="680,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                    <TextBlock TextWrapping="Wrap" Text="Search By Type" FontSize="10"></TextBlock>
+                </Button>
+                <Button Name="btn_loadData_Inital" Margin="480,290,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                    <TextBlock TextWrapping="Wrap" Text="Load Inital Data" FontSize="10"></TextBlock>
+                </Button>
+                <Button Name="btn_sortType_ZA"  Margin="580,290,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                    <TextBlock TextWrapping="Wrap" Text="Sort By Type Z-A" FontSize="10"></TextBlock>
+                </Button>
+                <Button Name="btn_saveList" Margin="680,290,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                    <TextBlock TextWrapping="Wrap" Text="Save Current List" FontSize="10"></TextBlock>
+                </Button>
+                <Button Name="btn_loadData_Previous" Margin="480,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                    <TextBlock TextWrapping="Wrap" Text="Load Previous Data" FontSize="10"></TextBlock>
+                </Button>
+                <Button Name="btn_sortType_AZ" Margin="580,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                    <TextBlock TextWrapping="Wrap" Text="Sort By Type A-Z" FontSize="10"></TextBlock>
+                </Button>
+                <Button Name="btn_clearAll" Margin="680,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                    <TextBlock TextWrapping="Wrap" Text="Clear All" FontSize="10"></TextBlock>
+                </Button>
+            </Grid>
+        </Grid>
+</Window>
