@@ -26,6 +26,7 @@ namespace Benchmark
     public partial class MainWindow : Window
     {
         public int count;
+        public ArrayList recent_list = new ArrayList();
         public MainWindow()
         {
             InitializeComponent();
@@ -40,12 +41,33 @@ namespace Benchmark
             MyClass animal = new MyClass(animal_name, animal_name + count, pt);
             count++;
             bg_rectangle.Children.Add(animal);
+            recent_list.Add(animal.get_Context_ToString());
+            object_list.ItemsSource = null;
+            object_list.ItemsSource= recent_list;
         }
 
         private void btn_removeObj_Click(object sender, RoutedEventArgs e)
         {
-            string object_selected = object_list.SelectedItem.ToString();
-            string object_key = object_selected.Split(',')[0];
+            object object_selected = object_list.SelectedItem;
+            string object_key = object_selected.ToString().Split(',')[0];
+            recent_list.Remove(object_selected.ToString());
+            object_list.ItemsSource = null;
+            object_list.ItemsSource = recent_list;
+            foreach (Image item in bg_rectangle.Children)
+            {
+                if (item.Name == object_key)
+                {
+                    bg_rectangle.Children.Remove(item);
+                    break;
+                }
+            }
+        }
+
+        private void btn_searchType_Click(object sender, RoutedEventArgs e)
+        {
+            string key = tb_search.Text;
+            Filter my_Search = new Filter(recent_list);
+            object_list.ItemsSource = null;
         }
     }
 

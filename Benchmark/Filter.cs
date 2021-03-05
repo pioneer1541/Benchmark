@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,16 @@ namespace Benchmark
 {
     class Filter
     {
-        public int index { get; set; }
-        public MyClass image { get; set; }
+        public ArrayList recent_list { set; get; }
 
 
-        public Filter (int index,MyClass image)
+
+
+        public Filter (ArrayList recent_list)
         {
-            this.index = index;
-            this.image = image;
+            this.recent_list = recent_list;
         }
+
 
     }
 }

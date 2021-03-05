@@ -14,7 +14,6 @@ namespace Benchmark
     class MyClass : System.Windows.Controls.Image
     {
         private string _type;
-        private string _name;
         private int _speedX;
         private int _speedY;
         private string[] _context;
@@ -29,15 +28,6 @@ namespace Benchmark
             this._type = value;
         }
 
-        public string get_name()
-        {
-            return this._name;
-        }
-
-        public void set_name(string value)
-        {
-            this._name = value;
-        }
 
         public int get_speedX()
         {
@@ -49,9 +39,14 @@ namespace Benchmark
             return this._speedY;
         }
 
-        public string get_context()
+        public string get_Context_ToString()
         {
            return this._context[0] + "," + this._context[1] + "," + this._context[2];
+        }
+
+        public string[] get_Context_ToArray()
+        {
+            return this._context;
         }
 
 
@@ -62,7 +57,7 @@ namespace Benchmark
 
         public MyClass (string type, string name, Point pt, int speedX = 4,int speedY = 6) {
             this._type = type;
-            this._name = name;
+            this.Name = name;
             this._speedX = speedX;
             this._speedY = speedY;
             var uriSource = new Uri("./Resources/" + type + "_img.gif", UriKind.Relative);
@@ -72,7 +67,7 @@ namespace Benchmark
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
             this.Tag = "RightUp";
-            this._context = new string[3]{ this._name , "speedX: " + this._speedX,"speedY: " + speedY };
+            this._context = new string[3]{ this.Name , "speedX: " + this._speedX,"speedY: " + speedY };
             this.Initialized += img_timer;
         }
 

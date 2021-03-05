@@ -23,7 +23,7 @@
                 <Button Name="btn_removeObj" Margin="580,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_removeObj_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Remove Selected Object" FontSize="10"></TextBlock>
                 </Button>
-                <Button Name="btn_searchType" Margin="680,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Button Name="btn_searchType" Margin="680,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_searchType_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Search By Type" FontSize="10"></TextBlock>
                 </Button>
                 <Button Name="btn_loadData_Inital" Margin="480,290,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
