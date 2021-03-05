@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Drawing;
 
 namespace Benchmark
 {
     class MyClass : System.Windows.Controls.Image
     {
-        private string _type;
-        private int _speedX;
-        private int _speedY;
-        private string[] _context;
+        public string _type;
+        public int _speedX;
+        public int _speedY;
+        public System.Windows.Point pt;
+        public string[] _context;
+        
 
         public string get_type()
         {
@@ -41,34 +44,46 @@ namespace Benchmark
 
         public string get_Context_ToString()
         {
-           return this._context[0] + "," + this._context[1] + "," + this._context[2];
+            return this._context[0] + ", X Speed:" + this._context[1] + ", Y Speed:" + this._context[2] + ", Location:" + this._context[3] + ", Direction:" + this._context[4];
         }
 
-        public string[] get_Context_ToArray()
-        {
-            return this._context;
-        }
-
-
-        public void set_context(int index,string value)
-        {
-            this._context[index] = value;
-        }
-
-        public MyClass (string type, string name, Point pt, int speedX = 4,int speedY = 6) {
+        public MyClass (string type, string name, System.Windows.Point pt) {
             this._type = type;
             this.Name = name;
-            this._speedX = speedX;
-            this._speedY = speedY;
+            this._speedX = 4;
+            this._speedY = 6;
+            this.pt = pt;
             var uriSource = new Uri("./Resources/" + type + "_img.gif", UriKind.Relative);
             this.Source = new BitmapImage(uriSource);
             this.Width = 60;
             this.Margin = new Thickness(pt.X - 20, pt.Y - 20, 0, 0);
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
-            this.Tag = "RightUp";
-            this._context = new string[3]{ this.Name , "speedX: " + this._speedX,"speedY: " + speedY };
+            string[] direction_Array = new string[] { "RightUp", "RightDown", "LeftUp", "LeftDown" };
+            Random lucky = new Random();
+            int lucky_number = lucky.Next(4);
+            this.Tag = direction_Array[lucky_number];
             this.Initialized += img_timer;
+            this._context = new string[5] { this.Name, this._speedX.ToString(), this._speedY.ToString(), this.pt.ToString() ,this.Tag.ToString()};
+
+        }
+
+        public MyClass(string type, string name, System.Windows.Point pt, int speedX, int speedY,string tag)
+        {
+            this._type = type;
+            this.Name = name;
+            this._speedX = speedX;
+            this._speedY = speedY;
+            this.pt = pt;
+            var uriSource = new Uri("./Resources/" + type + "_img.gif", UriKind.Relative);
+            this.Source = new BitmapImage(uriSource);
+            this.Width = 60;
+            this.Margin = new Thickness(pt.X, pt.Y, 0, 0);
+            this.HorizontalAlignment = HorizontalAlignment.Left;
+            this.VerticalAlignment = VerticalAlignment.Top;
+            this.Tag = tag;
+            this.Initialized += img_timer;
+            this._context = new string[5] { this.Name, this._speedX.ToString(), this._speedY.ToString(), this.pt.ToString(), this.Tag.ToString() };
         }
 
         private void img_timer(object sender, EventArgs e)
@@ -79,10 +94,10 @@ namespace Benchmark
         public void animation_Move(object sender)
         {
             Application.Current.Dispatcher.Invoke((Action)delegate {
-                Image animal = new Image();
-                animal = sender as Image;
+                System.Windows.Controls.Image animal = new System.Windows.Controls.Image();
+                animal = sender as System.Windows.Controls.Image;
                 Thickness margin = animal.Margin;
-
+                
                 if (margin.Left >= 390)
                 {
                     if (animal.Tag.ToString() == "RightUp")
@@ -130,20 +145,32 @@ namespace Benchmark
 
                 if (animal.Tag.ToString() == "LeftDown")
                 {
-                    animal.Margin = new Thickness(margin.Left - 5, margin.Top + 4, 0, 0);
+                    this.LayoutTransform = new System.Windows.Media.ScaleTransform(1, 1);
+                    this._speedX = -6;
+                    this._speedY = 4;
                 }
                 else if (animal.Tag.ToString() == "LeftUp")
                 {
-                    animal.Margin = new Thickness(margin.Left - 5, margin.Top - 4, 0, 0);
+                    this.LayoutTransform = new System.Windows.Media.ScaleTransform(1, 1);
+                    this._speedX = -6;
+                    this._speedY = -4;
                 }
                 else if (animal.Tag.ToString() == "RightUp")
                 {
-                    animal.Margin = new Thickness(margin.Left + 4, margin.Top - 6, 0, 0);
+                    this.LayoutTransform = new System.Windows.Media.ScaleTransform(-1, 1);
+                    this._speedX = 4;
+                    this._speedY = -6;
                 }
                 else if (animal.Tag.ToString() == "RightDown")
                 {
-                    animal.Margin = new Thickness(margin.Left + 4, margin.Top + 6, 0, 0);
+                    this.LayoutTransform = new System.Windows.Media.ScaleTransform(-1, 1);
+                    this._speedX = 6;
+                    this._speedY = 4;
                 }
+                animal.Margin = new Thickness(margin.Left + this._speedX, margin.Top + this._speedY, 0, 0);
+                this.pt.X = margin.Left;
+                this.pt.Y = margin.Top;
+                this._context = new string[5] { this.Name, this._speedX.ToString(), this._speedY.ToString(), this.pt.ToString(), this.Tag.ToString() };
             });
         }
     }

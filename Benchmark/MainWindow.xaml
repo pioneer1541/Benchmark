@@ -9,6 +9,9 @@
     <Grid Name="bg_whole">
         <Grid Name="bg_rectangle" Width="450" Height="400" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Image x:Name="bg_img" Source="./Resources/bg_img.png" Stretch="Fill" MouseDown="btnCreate_Img"></Image>
+            <Grid Name="animal_zone" Width="450" Height="400" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                
+            </Grid>
         </Grid>
         
         <Grid>
@@ -17,7 +20,7 @@
                 <TextBox Name="tb_search" Margin="620,215,0,0" Width="140" VerticalAlignment="Top" HorizontalAlignment="Left" ></TextBox>
             </Grid>
             <Grid>
-                <Button Name="btn_showStatus" Margin="480,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Button Name="btn_showStatus" Margin="480,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_showStatus_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Show Status" FontSize="10"></TextBlock>
                 </Button>
                 <Button Name="btn_removeObj" Margin="580,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_removeObj_Click" >
@@ -26,24 +29,24 @@
                 <Button Name="btn_searchType" Margin="680,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_searchType_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Search By Type" FontSize="10"></TextBlock>
                 </Button>
-                <Button Name="btn_loadData_Inital" Margin="480,290,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Button Name="btn_loadData_Inital" Margin="480,290,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_loadData_Inital_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Load Inital Data" FontSize="10"></TextBlock>
                 </Button>
-                <Button Name="btn_sortType_ZA"  Margin="580,290,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Button Name="btn_sortType_ZA"  Margin="580,290,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_sortType_ZA_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Sort By Type Z-A" FontSize="10"></TextBlock>
                 </Button>
-                <Button Name="btn_saveList" Margin="680,290,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Button Name="btn_saveList" Margin="680,290,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_saveList_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Save Current List" FontSize="10"></TextBlock>
                 </Button>
-                <Button Name="btn_loadData_Previous" Margin="480,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Button Name="btn_loadData_Previous" Margin="480,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_loadData_Previous_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Load Previous Data" FontSize="10"></TextBlock>
                 </Button>
-                <Button Name="btn_sortType_AZ" Margin="580,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Button Name="btn_sortType_AZ" Margin="580,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_sortType_AZ_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Sort By Type A-Z" FontSize="10"></TextBlock>
                 </Button>
-                <Button Name="btn_clearAll" Margin="680,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Button Name="btn_clearAll" Margin="680,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_clearAll_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Clear All" FontSize="10"></TextBlock>
                 </Button>
-            </Grid>
+        </Grid>
         </Grid>
 </Window>
