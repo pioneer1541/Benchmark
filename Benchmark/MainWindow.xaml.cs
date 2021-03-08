@@ -13,6 +13,7 @@ namespace Benchmark
     {
         public int count;
         public ArrayList recent_list = new ArrayList();
+        public ArrayList search_List = new ArrayList();
         public ArrayList previous_list = new ArrayList();
         public MainWindow()
         {
@@ -54,10 +55,8 @@ namespace Benchmark
         private void btn_searchType_Click(object sender, RoutedEventArgs e)
         {
             string key = tb_search.Text;
-            Filter my_Search = new Filter(recent_list);
-            object_list.ItemsSource = null;
-            var search_Result = my_Search.search_List(key);
-            object_list.ItemsSource = search_Result;
+            previous_list = recent_list;
+            refresh_list(key);
         }
 
         private void btn_sortType_ZA_Click(object sender, RoutedEventArgs e)
@@ -89,12 +88,17 @@ namespace Benchmark
             recent_list = result;
         }
 
-        public void refresh_list()
+        public void refresh_list(string key = "")
         {
             Filter my_Search = new Filter(recent_list);
-            var search_Result = my_Search.search_List("");
-            object_list.ItemsSource = null;
-            object_list.ItemsSource = search_Result;
+            var search_Result = my_Search.search_List(key);
+            ArrayList new_List = new ArrayList();
+            foreach (MyClass i in search_Result)
+            {
+                new_List.Add(i);
+            }
+            recent_list = new_List;
+            object_list.ItemsSource = my_Search.get_List(search_Result);
         }
 
         private void btn_clearAll_Click(object sender, RoutedEventArgs e)
@@ -106,19 +110,20 @@ namespace Benchmark
 
         private void btn_loadData_Previous_Click(object sender, RoutedEventArgs e)
         {
+            ArrayList new_Array = new ArrayList();
+            new_Array = recent_list;
+            btn_clearAll_Click(sender, e);
+            recent_list = previous_list;
+            previous_list = new_Array;
+
+            foreach (MyClass animal in recent_list)
+            {
+                animal_zone.Children.Add(animal);
+            }
             refresh_list();
         }
 
-        private void btn_saveList_Click(object sender, RoutedEventArgs e)
-        {
-            ArrayList list_data = new ArrayList();
-            foreach(string data in object_list.Items)
-            {
-                list_data.Add(data);
-            }
-            FileManager operation = new FileManager(list_data);
-            operation.save_List();
-        }
+
 
         private void btn_showStatus_Click(object sender, RoutedEventArgs e)
         {
@@ -157,6 +162,17 @@ namespace Benchmark
                 recent_list.Add(animal);
                 refresh_list();
             }
+        }
+
+        private void btn_saveList_Click(object sender, RoutedEventArgs e)
+        {
+            ArrayList list_data = new ArrayList();
+            foreach (string data in object_list.Items)
+            {
+                list_data.Add(data);
+            }
+            FileManager operation = new FileManager(list_data);
+            operation.save_List();
         }
     }
 
