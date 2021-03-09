@@ -13,15 +13,13 @@ namespace Benchmark
     {
         public int count;
         public ArrayList recent_list = new ArrayList();
-        public ArrayList search_List = new ArrayList();
-        public ArrayList previous_list = new ArrayList();
+        public string[] animal_Array = new string[] { "cows", "deer", "horse", "dragon" };
         public MainWindow()
         {
             InitializeComponent();
         }
         private void btnCreate_Img(object sender, MouseEventArgs e)
         {
-            string[] animal_Array = new string[] { "cows", "deer","horse","dragon" };
             Random lucky = new Random();
             int lucky_number = lucky.Next(4);
             string animal_name = animal_Array[lucky_number];
@@ -35,28 +33,41 @@ namespace Benchmark
 
         private void btn_removeObj_Click(object sender, RoutedEventArgs e)
         {
-            object object_selected = object_list.SelectedItem;
-            string object_key = object_selected.ToString().Split(',')[0];
-            recent_list.Remove(object_selected.ToString());
-            foreach (System.Windows.Controls.Image item in animal_zone.Children)
+            if (object_list.SelectedItem != null)
             {
-                if (item.Name == object_key)
+                object object_selected = object_list.SelectedItem;
+                string object_key = object_selected.ToString().Split(',')[0];
+                recent_list.Remove(object_selected.ToString());
+                foreach (System.Windows.Controls.Image item in animal_zone.Children)
                 {
-                    animal_zone.Children.Remove(item);
-                    remove_list(item.Name);
-                    break;
+                    if (item.Name == object_key)
+                    {
+                        animal_zone.Children.Remove(item);
+                        remove_list(item.Name);
+                        break;
+                    }
                 }
+                refresh_list();
+            } else
+            {
+                MessageBox.Show("Please select a record from the list before removing a record.","Opps!");
             }
-            refresh_list();
+            
 
 
         }
 
         private void btn_searchType_Click(object sender, RoutedEventArgs e)
         {
-            string key = tb_search.Text;
-            previous_list = recent_list;
-            refresh_list(key);
+            if (tb_search.Text != "")
+            {
+                string key = tb_search.Text;
+                refresh_list(key);
+            } else
+            {
+                MessageBox.Show("Please enter key words for searching.", "Opps!");
+            }
+            
         }
 
         private void btn_sortType_ZA_Click(object sender, RoutedEventArgs e)
@@ -92,13 +103,8 @@ namespace Benchmark
         {
             Filter my_Search = new Filter(recent_list);
             var search_Result = my_Search.search_List(key);
-            ArrayList new_List = new ArrayList();
-            foreach (MyClass i in search_Result)
-            {
-                new_List.Add(i);
-            }
-            recent_list = new_List;
-            object_list.ItemsSource = my_Search.get_List(search_Result);
+            object_list.ItemsSource = null;
+            object_list.ItemsSource = search_Result;
         }
 
         private void btn_clearAll_Click(object sender, RoutedEventArgs e)
@@ -110,21 +116,19 @@ namespace Benchmark
             }
             recent_list = new ArrayList();
             object_list.ItemsSource = null;
+            MessageBox.Show("Done!", ":)");
         }
 
         private void btn_loadData_Previous_Click(object sender, RoutedEventArgs e)
         {
-            ArrayList new_Array = new ArrayList();
-            new_Array = recent_list;
-            btn_clearAll_Click(sender, e);
-            recent_list = previous_list;
-            previous_list = new_Array;
-
-            foreach (MyClass animal in recent_list)
+            FileManager operation = new FileManager();
+            if (operation.load_List(0))
             {
-                animal_zone.Children.Add(animal);
+                object_list.ItemsSource = operation.data;
             }
-            refresh_list();
+            recreate_animal(operation.data);
+
+            MessageBox.Show("Done!", ":)");
         }
 
 
@@ -137,12 +141,12 @@ namespace Benchmark
         private void btn_loadData_Inital_Click(object sender, RoutedEventArgs e)
         {
             FileManager operation = new FileManager();
-            if(operation.load_List())
+            if(operation.load_List(1))
             {
-                object_list.ItemsSource = null;
                 object_list.ItemsSource = operation.data;
             }
             recreate_animal(operation.data);
+            MessageBox.Show("Done!", ":)");
         }
 
         public void recreate_animal(ArrayList data)
@@ -151,6 +155,13 @@ namespace Benchmark
             {
                 string[] data_Array = animal_Data.Split(',');
                 string animal_name = data_Array[0];
+                foreach(MyClass item in recent_list)
+                {
+                    if (item.Name == animal_name)
+                    {
+                        animal_name += "_1";
+                    }
+                }
                 string animal_type = data_Array[0].Substring(0, data_Array[0].IndexOf("_"));
                 System.Windows.Point pt = new Point();
                 int location_Index = data_Array[3].IndexOf(":");
@@ -170,6 +181,7 @@ namespace Benchmark
 
         private void btn_saveList_Click(object sender, RoutedEventArgs e)
         {
+            refresh_list();
             ArrayList list_data = new ArrayList();
             foreach (string data in object_list.Items)
             {
@@ -177,6 +189,8 @@ namespace Benchmark
             }
             FileManager operation = new FileManager(list_data);
             operation.save_List();
+
+            MessageBox.Show("Done!", ":)");
         }
     }
 

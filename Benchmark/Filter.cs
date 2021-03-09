@@ -19,12 +19,12 @@ namespace Benchmark
             this.recent_list = recent_list;
         }
 
-        public IEnumerable<MyClass> search_List (string key)
+        public IEnumerable<string> search_List(string key)
         {
-            IEnumerable<MyClass> result_list =
+            IEnumerable<string> result_list =
                 from MyClass item in this.recent_list
                 where item.Name.Contains(key)
-                select item ;
+                select item.get_Context_ToString();
             return result_list;
         }
 

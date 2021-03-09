@@ -39,7 +39,7 @@
                     <TextBlock TextWrapping="Wrap" Text="Save Current List" FontSize="10"></TextBlock>
                 </Button>
                 <Button Name="btn_loadData_Previous" Margin="480,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_loadData_Previous_Click" >
-                    <TextBlock TextWrapping="Wrap" Text="Load Previous Data" FontSize="10"></TextBlock>
+                    <TextBlock TextWrapping="Wrap" Text="Load Previous Saving" FontSize="10"></TextBlock>
                 </Button>
                 <Button Name="btn_sortType_AZ" Margin="580,340,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_sortType_AZ_Click" >
                     <TextBlock TextWrapping="Wrap" Text="Sort By Type A-Z" FontSize="10"></TextBlock>
