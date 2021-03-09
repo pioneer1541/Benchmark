@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Drawing;
+using System.Windows.Threading;
 
 namespace Benchmark
 {
@@ -48,10 +49,14 @@ namespace Benchmark
         }
 
         public MyClass (string type, string name, System.Windows.Point pt) {
+            Random lucky = new Random();
+            int lucky_number = lucky.Next(4);
+            int speed = lucky.Next(3, 8);
+
             this._type = type;
             this.Name = name;
-            this._speedX = 4;
-            this._speedY = 6;
+            this._speedX = speed;
+            this._speedY = speed;
             this.pt = pt;
             var uriSource = new Uri("./Resources/" + type + "_img.gif", UriKind.Relative);
             this.Source = new BitmapImage(uriSource);
@@ -60,20 +65,22 @@ namespace Benchmark
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
             string[] direction_Array = new string[] { "RightUp", "RightDown", "LeftUp", "LeftDown" };
-            Random lucky = new Random();
-            int lucky_number = lucky.Next(4);
             this.Tag = direction_Array[lucky_number];
-            this.Initialized += img_timer;
+            this.Initialized += timer_start;
             this._context = new string[5] { this.Name, this._speedX.ToString(), this._speedY.ToString(), this.pt.ToString() ,this.Tag.ToString()};
 
         }
 
         public MyClass(string type, string name, System.Windows.Point pt, int speedX, int speedY,string tag)
         {
+            Random lucky = new Random();
+            int lucky_number = lucky.Next(4);
+            int speed = lucky.Next(3, 8);
+
             this._type = type;
             this.Name = name;
-            this._speedX = speedX;
-            this._speedY = speedY;
+            this._speedX = speed;
+            this._speedY = speed;
             this.pt = pt;
             var uriSource = new Uri("./Resources/" + type + "_img.gif", UriKind.Relative);
             this.Source = new BitmapImage(uriSource);
@@ -82,96 +89,95 @@ namespace Benchmark
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
             this.Tag = tag;
-            this.Initialized += img_timer;
+            this.Initialized += timer_start;
             this._context = new string[5] { this.Name, this._speedX.ToString(), this._speedY.ToString(), this.pt.ToString(), this.Tag.ToString() };
         }
 
-        private void img_timer(object sender, EventArgs e)
+        private void timer_start(object sender, EventArgs e)
         {
-            Timer timer = new Timer(animation_Move, sender, 0, 66);
-            GCHandle gch = GCHandle.Alloc(timer);
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Tick += new EventHandler(animation_Move);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 66);
+            timer.Start();
         }
-        public void animation_Move(object sender)
+        public void animation_Move(object sender, EventArgs e)
         {
-            Application.Current.Dispatcher.Invoke((Action)delegate {
-                System.Windows.Controls.Image animal = new System.Windows.Controls.Image();
-                animal = sender as System.Windows.Controls.Image;
-                Thickness margin = animal.Margin;
+                Thickness margin = this.Margin;
                 
                 if (margin.Left >= 390)
                 {
-                    if (animal.Tag.ToString() == "RightUp")
+                    if (this.Tag.ToString() == "RightUp")
                     {
-                        animal.Tag = "LeftUp";
+                        this.Tag = "LeftUp";
                     }
-                    else if (animal.Tag.ToString() == "RightDown")
+                    else if (this.Tag.ToString() == "RightDown")
                     {
-                        animal.Tag = "LeftDown";
+                        this.Tag = "LeftDown";
                     }
                 }
-                else if (margin.Left <= 2)
+                else if (margin.Left <= 0)
                 {
-                    if (animal.Tag.ToString() == "LeftUp")
+                    if (this.Tag.ToString() == "LeftUp")
                     {
-                        animal.Tag = "RightUp";
+                        this.Tag = "RightUp";
                     }
-                    else if (animal.Tag.ToString() == "LeftDown")
+                    else if (this.Tag.ToString() == "LeftDown")
                     {
-                        animal.Tag = "RightDown";
+                        this.Tag = "RightDown";
                     }
                 }
                 else if (margin.Top >= 340)
                 {
-                    if (animal.Tag.ToString() == "LeftDown")
+                    if (this.Tag.ToString() == "LeftDown")
                     {
-                        animal.Tag = "LeftUp";
+                        this.Tag = "LeftUp";
                     }
-                    else if (animal.Tag.ToString() == "RightDown")
+                    else if (this.Tag.ToString() == "RightDown")
                     {
-                        animal.Tag = "RightUp";
+                        this.Tag = "RightUp";
                     }
                 }
                 else if (margin.Top <= 2)
                 {
-                    if (animal.Tag.ToString() == "LeftUp")
+                    if (this.Tag.ToString() == "LeftUp")
                     {
-                        animal.Tag = "LeftDown";
+                        this.Tag = "LeftDown";
                     }
-                    else if (animal.Tag.ToString() == "RightUp")
+                    else if (this.Tag.ToString() == "RightUp")
                     {
-                        animal.Tag = "RightDown";
+                        this.Tag = "RightDown";
                     }
                 }
 
-                if (animal.Tag.ToString() == "LeftDown")
+                if (this.Tag.ToString() == "LeftDown")
                 {
                     this.LayoutTransform = new System.Windows.Media.ScaleTransform(1, 1);
-                    this._speedX = -6;
-                    this._speedY = 4;
+                this._speedX = 0 - Math.Abs(this._speedX);
+                this._speedY = Math.Abs(this._speedY);
                 }
-                else if (animal.Tag.ToString() == "LeftUp")
+                else if (this.Tag.ToString() == "LeftUp")
                 {
                     this.LayoutTransform = new System.Windows.Media.ScaleTransform(1, 1);
-                    this._speedX = -6;
-                    this._speedY = -4;
+                    this._speedX = 0 - Math.Abs(this._speedX);
+                    this._speedY = 0 - Math.Abs(this._speedY); ;
                 }
-                else if (animal.Tag.ToString() == "RightUp")
+                else if (this.Tag.ToString() == "RightUp")
                 {
                     this.LayoutTransform = new System.Windows.Media.ScaleTransform(-1, 1);
-                    this._speedX = 4;
-                    this._speedY = -6;
-                }
-                else if (animal.Tag.ToString() == "RightDown")
+                this._speedX = Math.Abs(this._speedX);
+                this._speedY = 0 - Math.Abs(this._speedY); ;
+            }
+                else if (this.Tag.ToString() == "RightDown")
                 {
                     this.LayoutTransform = new System.Windows.Media.ScaleTransform(-1, 1);
-                    this._speedX = 6;
-                    this._speedY = 4;
-                }
-                animal.Margin = new Thickness(margin.Left + this._speedX, margin.Top + this._speedY, 0, 0);
+                this._speedX = Math.Abs(this._speedX);
+                this._speedY = Math.Abs(this._speedY);
+            }
+                this.Margin = new Thickness(margin.Left + this._speedX, margin.Top + this._speedY, 0, 0);
                 this.pt.X = margin.Left;
                 this.pt.Y = margin.Top;
                 this._context = new string[5] { this.Name, this._speedX.ToString(), this._speedY.ToString(), this.pt.ToString(), this.Tag.ToString() };
-            });
         }
+
     }
 }

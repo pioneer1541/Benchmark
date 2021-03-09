@@ -104,6 +104,10 @@ namespace Benchmark
         private void btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
             animal_zone.Children.Clear();
+            foreach (MyClass item in recent_list)
+            {
+                
+            }
             recent_list = new ArrayList();
             object_list.ItemsSource = null;
         }
