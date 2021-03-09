@@ -9,49 +9,67 @@ namespace Benchmark
 {
     class Filter
     {
-        public ArrayList recent_list { set; get; }
+        public ArrayList recent_list { set; get; } //Defined to store recent_list for filting list. 
 
 
 
 
-        public Filter (ArrayList recent_list)
+        public Filter (ArrayList recent_list) //construction method
         {
             this.recent_list = recent_list;
         }
 
-        public IEnumerable<string> search_List(string key)
+        public IEnumerable<string> search_List(string key) //Acquire a new list that results from the object name that contains the keyword.
         {
-            IEnumerable<string> result_list =
+            try
+            {
+                IEnumerable<string> result_list =
                 from MyClass item in this.recent_list
                 where item.Name.Contains(key)
-                select item.get_Context_ToString();
-            return result_list;
-        }
+                select item.context;
+                return result_list;
+            }
+            catch (Exception)
+            {
 
-        public IEnumerable<string> get_List(IEnumerable<MyClass> key)
-        {
-            IEnumerable<string> result_list =
-                from MyClass item in key
-                select item.get_Context_ToString();
-            return result_list;
+                throw;
+            }
+            
         }
-
-        public IEnumerable<string> sort_ListZA()
+        public IEnumerable<string> sort_ListZA() //Sorting recent list by descending order.
         {
-            IEnumerable<string> result_list =
+            try
+            {
+                IEnumerable<string> result_list =
                 from MyClass item in this.recent_list
                 orderby item.Name descending
-                select item.get_Context_ToString();
-            return result_list;
+                select item.context;
+                return result_list;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
-        public IEnumerable<string> sort_ListAZ()
+        public IEnumerable<string> sort_ListAZ() //Sorting recent list by ascending order.
         {
-            IEnumerable<string> result_list =
+            try
+            {
+                IEnumerable<string> result_list =
                 from MyClass item in this.recent_list
                 orderby item.Name
-                select item.get_Context_ToString();
-            return result_list;
+                select item.context;
+                return result_list;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
     }
 }
