@@ -30,7 +30,7 @@ namespace Benchmark
 
                 //Get a point click location for creating a animal;
                 System.Windows.Point pt = e.GetPosition(animal_zone);
-                MyClass animal = new MyClass(animaltype, animal_name + "_" + count, pt);
+                MyClass animal = new MyClass(animaltype, animal_name, pt);
                 count++;
 
                 // Add new animal to scene and list;

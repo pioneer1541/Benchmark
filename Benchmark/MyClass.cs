@@ -43,8 +43,8 @@ namespace Benchmark
             //Decide initial moving direction base on random.
             string[] direction_Array = new string[] { "RightUp", "RightDown", "LeftUp", "LeftDown" };
             this.Tag = direction_Array[lucky_number]; //This property is for moving strategy
-            this.Initialized += Timer_Start; //Setting initial event to a timer method.
-            this.context = this.context[0] + ", X Speed:" + this.context[1] + ", Y Speed:" + this.context[2] + ", Location:" + this.context[3] + ", Direction:" + this.context[4];
+            this.Initialized += timer_start; //Setting initial event to a timer method.
+            this.context = this.Name + ", X Speed:" + this.speedX.ToString() + ", Y Speed:" + this.speedY.ToString() + ", Location:" + this.pt.ToString() + ", Direction:" + this.Tag.ToString();
 
 
         }
@@ -67,8 +67,8 @@ namespace Benchmark
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
             this.Tag = tag;
-            this.Initialized += Timer_Start;
-            this.context = this.context[0] + ", X Speed:" + this.context[1] + ", Y Speed:" + this.context[2] + ", Location:" + this.context[3] + ", Direction:" + this.context[4];
+            this.Initialized += timer_start;
+            this.context = this.Name + ", X Speed:" + this.speedX.ToString() + ", Y Speed:" + this.speedY.ToString() + ", Location:" + this.pt.ToString() + ", Direction:" + this.Tag.ToString();
         }
 
         private void Timer_Start(object sender, EventArgs e)
@@ -173,7 +173,7 @@ namespace Benchmark
                 this.pt.Y = margin.Top;
 
                 //Updating a context of the object for object list.
-                this.context = this.context[0] + ", X Speed:" + this.context[1] + ", Y Speed:" + this.context[2] + ", Location:" + this.context[3] + ", Direction:" + this.context[4];
+                this.context = this.Name + ", X Speed:" + this.speedX.ToString() + ", Y Speed:" + this.speedY.ToString() + ", Location:" + this.pt.ToString() + ", Direction:" + this.Tag.ToString();
             }
             catch (Exception)
             {

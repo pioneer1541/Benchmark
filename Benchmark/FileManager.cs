@@ -6,6 +6,15 @@ namespace Benchmark
 {
     public class FileManager
     {
+        private string[] _initialData_Array = new string[]
+        {
+            //an Array for initial data to create a new initial data context
+            "horse_0, X Speed:6, Y Speed:6, Location:83,75, Direction:RightDown",
+            "horse_1, X Speed:-4, Y Speed:-4, Location:123,64, Direction:LeftUp",
+            "dragon_2, X Speed:-7, Y Speed:7, Location:69,282, Direction:LeftDown",
+            "cows_3, X Speed:3, Y Speed:-3, Location:248,87, Direction:RightUp",
+            "dragon_4, X Speed:-5, Y Speed:-5, Location:10,277, Direction:LeftUp"
+        };
         public string path = "./data"; //Define a directory path
         public string path_PreviousData = "./data/PrevioursData.txt"; //Define a txt file path for the previous saving data.
         public string path_InitialData = "./data/InitialData.txt"; //Define a txt file path for the initial data.
@@ -33,7 +42,8 @@ namespace Benchmark
 
                 if (!File.Exists(path_PreviousData)) //Create a txt file if it is not exist.
                 {
-                    File.Create(path_PreviousData);
+                    FileStream file = File.Create(path_PreviousData);
+                    file.Close();
                 }
 
                 StreamWriter sw = new StreamWriter(path_PreviousData);
@@ -74,8 +84,20 @@ namespace Benchmark
                         sr.Close();
                         return true;
                     }
-                    else if (loading_Type == 1 && File.Exists(path_InitialData))
+                    else if (loading_Type == 1)
                     {
+                        if (!File.Exists(path_InitialData))
+                        {
+                            FileStream file = File.Create(path_InitialData);
+                            file.Close();
+                            StreamWriter sw = new StreamWriter(path_InitialData);
+                            foreach (string data in _initialData_Array)
+                            {
+                                sw.WriteLine(data);
+                            }
+                            sw.Close();
+                        }
+
                         StreamReader sr = new StreamReader(path_InitialData);
                         string line;
                         while ((line = sr.ReadLine()) != null)
@@ -84,6 +106,7 @@ namespace Benchmark
                         }
                         sr.Close();
                         return true;
+
                     }
                     else
                     {
