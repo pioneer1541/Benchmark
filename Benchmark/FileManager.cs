@@ -31,7 +31,7 @@ namespace Benchmark
             this.Data = new ArrayList();
         }
 
-        public void Save_List() //Used for saving recent list.
+        public Boolean Save_List() //Used for saving recent list.
         {
             try
             {
@@ -54,6 +54,7 @@ namespace Benchmark
                 }
 
                 sw.Close();
+                return true;
             }
             catch (Exception)
             {

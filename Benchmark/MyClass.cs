@@ -5,6 +5,7 @@ using System.Windows.Threading;
 
 namespace Benchmark
 {
+    
     public class MyClass : System.Windows.Controls.Image
     {
         public string type; //Animal type.
@@ -13,7 +14,7 @@ namespace Benchmark
         public System.Windows.Point pt; //The location of the object.
         public string context; //A string sentence for the object list.
 
-        public MyClass(string type, string name, System.Windows.Point pt)
+        public MyClass(string type, string name, Point pt)
         {
             //construction function of creating new object without loading data.
             //This class is a subclass of Image Controls Class.
@@ -28,6 +29,7 @@ namespace Benchmark
             int speed = lucky.Next(3, 8);
             this.speedX = speed;
             this.speedY = speed;
+            this.pt = pt;
 
             //Setting image for Image Control base on the type.
             var uriSource = new Uri("./Resources/" + type + "_img.gif", UriKind.Relative);
@@ -43,8 +45,8 @@ namespace Benchmark
             //Decide initial moving direction base on random.
             string[] direction_Array = new string[] { "RightUp", "RightDown", "LeftUp", "LeftDown" };
             this.Tag = direction_Array[lucky_number]; //This property is for moving strategy
-            this.Initialized += timer_start; //Setting initial event to a timer method.
-            this.context = this.Name + ", X Speed:" + this.speedX.ToString() + ", Y Speed:" + this.speedY.ToString() + ", Location:" + this.pt.ToString() + ", Direction:" + this.Tag.ToString();
+            this.Initialized += Timer_Start; //Setting initial event to a timer method.
+            this.context = this.Name + ", X Speed:" + this.speedX.ToString() + ", Y Speed:" + this.speedY.ToString() + ", Location:" + pt.ToString() + ", Direction:" + this.Tag.ToString();
 
 
         }
@@ -60,6 +62,7 @@ namespace Benchmark
             this.Name = name;
             this.speedX = speedX;
             this.speedY = speedY;
+            this.pt = pt;
             var uriSource = new Uri("./Resources/" + type + "_img.gif", UriKind.Relative);
             this.Source = new BitmapImage(uriSource);
             this.Width = 60;
@@ -67,8 +70,8 @@ namespace Benchmark
             this.HorizontalAlignment = HorizontalAlignment.Left;
             this.VerticalAlignment = VerticalAlignment.Top;
             this.Tag = tag;
-            this.Initialized += timer_start;
-            this.context = this.Name + ", X Speed:" + this.speedX.ToString() + ", Y Speed:" + this.speedY.ToString() + ", Location:" + this.pt.ToString() + ", Direction:" + this.Tag.ToString();
+            this.Initialized += Timer_Start;
+            this.context = this.Name + ", X Speed:" + this.speedX.ToString() + ", Y Speed:" + this.speedY.ToString() + ", Location:" + pt.ToString() + ", Direction:" + this.Tag.ToString();
         }
 
         private void Timer_Start(object sender, EventArgs e)

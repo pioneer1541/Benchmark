@@ -17,7 +17,7 @@ namespace Benchmark
             this.Recent_List = Recent_List;
         }
 
-        public IEnumerable<string> Search_List(string key) //Acquire a new list that results from the object name that contains the keyword.
+        public ArrayList Search_List(string key) //Acquire a new list that results from the object name that contains the keyword.
         {
             try
             {
@@ -25,7 +25,13 @@ namespace Benchmark
                 from MyClass item in this.Recent_List
                 where item.Name.Contains(key)
                 select item.context;
-                return result_list;
+                ArrayList finial_List = new ArrayList();
+                foreach (var i in result_list)
+                {
+                    finial_List.Add(i);
+                }
+
+                return finial_List;
             }
             catch (Exception)
             {
@@ -34,7 +40,7 @@ namespace Benchmark
             }
 
         }
-        public IEnumerable<string> Sort_ListZA() //Sorting recent list by descending order.
+        public ArrayList Sort_ListZA() //Sorting recent list by descending order.
         {
             try
             {
@@ -42,7 +48,14 @@ namespace Benchmark
                 from MyClass item in this.Recent_List
                 orderby item.Name descending
                 select item.context;
-                return result_list;
+
+                ArrayList finial_List = new ArrayList();
+                foreach (var i in result_list)
+                {
+                    finial_List.Add(i);
+                }
+
+                return finial_List;
             }
             catch (Exception)
             {
@@ -52,7 +65,7 @@ namespace Benchmark
 
         }
 
-        public IEnumerable<string> Sort_ListAZ() //Sorting recent list by ascending order.
+        public ArrayList Sort_ListAZ() //Sorting recent list by ascending order.
         {
             try
             {
@@ -60,7 +73,13 @@ namespace Benchmark
                 from MyClass item in this.Recent_List
                 orderby item.Name
                 select item.context;
-                return result_list;
+                ArrayList finial_List = new ArrayList();
+                foreach (var i in result_list)
+                {
+                    finial_List.Add(i);
+                }
+
+                return finial_List;
             }
             catch (Exception)
             {
