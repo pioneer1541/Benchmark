@@ -1,32 +1,28 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace Benchmark
 {
-    class FileManager
+    public class FileManager
     {
         public string path = "./data"; //Define a directory path
         public string path_PreviousData = "./data/PrevioursData.txt"; //Define a txt file path for the previous saving data.
         public string path_InitialData = "./data/InitialData.txt"; //Define a txt file path for the initial data.
-        public ArrayList data { set; get; }  //Used for storing data to writing file or reading file.
+        public ArrayList Data { set; get; }  //Used for storing data to writing file or reading file.
 
         public FileManager(ArrayList data) //A Construction method for action of the writing file.
         {
-            this.data = data; 
+            this.Data = data;
 
         }
 
         public FileManager() //A Construction method for action of the reading file.
         {
-            this.data = new ArrayList();
+            this.Data = new ArrayList();
         }
 
-        public void save_List() //Used for saving recent list.
+        public void Save_List() //Used for saving recent list.
         {
             try
             {
@@ -42,7 +38,7 @@ namespace Benchmark
 
                 StreamWriter sw = new StreamWriter(path_PreviousData);
                 sw.Flush();//clear all existing data.
-                foreach (string data in this.data)
+                foreach (string data in this.Data)
                 {
                     sw.WriteLine(data);
                 }
@@ -54,11 +50,11 @@ namespace Benchmark
 
                 throw;
             }
-            
-            
+
+
         }
 
-        public Boolean load_List(int loading_Type)
+        public Boolean Load_List(int loading_Type)
         //Used for loading data from a specific txt file.
         //This method will return a Boolean for using it to check if load aciton is success and the loaded data will be stored into [data] proprety.
         //loading_Type 0 means loading previous data,1 means loading initial data.
@@ -73,7 +69,7 @@ namespace Benchmark
                         string line;
                         while ((line = sr.ReadLine()) != null)
                         {
-                            this.data.Add(line);
+                            this.Data.Add(line);
                         }
                         sr.Close();
                         return true;
@@ -84,7 +80,7 @@ namespace Benchmark
                         string line;
                         while ((line = sr.ReadLine()) != null)
                         {
-                            this.data.Add(line);
+                            this.Data.Add(line);
                         }
                         sr.Close();
                         return true;
@@ -105,7 +101,7 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
     }
 }

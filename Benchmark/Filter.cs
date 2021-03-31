@@ -2,29 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Benchmark
 {
-    class Filter
+    public class Filter
     {
-        public ArrayList recent_list { set; get; } //Defined to store recent_list for filting list. 
+        public ArrayList Recent_List { set; get; } //Defined to store Recent_List for filting list. 
 
 
 
 
-        public Filter (ArrayList recent_list) //construction method
+        public Filter(ArrayList Recent_List) //construction method
         {
-            this.recent_list = recent_list;
+            this.Recent_List = Recent_List;
         }
 
-        public IEnumerable<string> search_List(string key) //Acquire a new list that results from the object name that contains the keyword.
+        public IEnumerable<string> Search_List(string key) //Acquire a new list that results from the object name that contains the keyword.
         {
             try
             {
                 IEnumerable<string> result_list =
-                from MyClass item in this.recent_list
+                from MyClass item in this.Recent_List
                 where item.Name.Contains(key)
                 select item.context;
                 return result_list;
@@ -34,14 +32,14 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
-        public IEnumerable<string> sort_ListZA() //Sorting recent list by descending order.
+        public IEnumerable<string> Sort_ListZA() //Sorting recent list by descending order.
         {
             try
             {
                 IEnumerable<string> result_list =
-                from MyClass item in this.recent_list
+                from MyClass item in this.Recent_List
                 orderby item.Name descending
                 select item.context;
                 return result_list;
@@ -51,15 +49,15 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
 
-        public IEnumerable<string> sort_ListAZ() //Sorting recent list by ascending order.
+        public IEnumerable<string> Sort_ListAZ() //Sorting recent list by ascending order.
         {
             try
             {
                 IEnumerable<string> result_list =
-                from MyClass item in this.recent_list
+                from MyClass item in this.Recent_List
                 orderby item.Name
                 select item.context;
                 return result_list;
@@ -69,7 +67,7 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
     }
 }

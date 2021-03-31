@@ -18,7 +18,7 @@ namespace Benchmark
         {
             InitializeComponent();
         }
-        private void btnCreate_Img(object sender, MouseEventArgs e) //Creating animal to a scene and add it to the object list;
+        public void btnCreate_Img(object sender, MouseEventArgs e) //Creating animal to a scene and add it to the object list;
         {
             try
             {
@@ -34,22 +34,18 @@ namespace Benchmark
                 count++;
 
                 // Add new animal to scene and list;
-                System.Windows.Controls.Grid animal_Grid = new System.Windows.Controls.Grid();
-                animal_Grid.Name = animal_name;
-
-                animal_zone.Children.Add(animal_Grid);
-                //            animal_Grid.Children.Add(animal.animal_Label);
-                animal_Grid.Children.Add(animal);
+                animal_zone.Children.Add(animal);
                 recent_list.Add(animal);
-                refresh_list();
-            } catch(Exception)
+                Refresh_list();
+            }
+            catch (Exception)
             {
                 throw;
             }
-            
+
         }
 
-        private void btn_removeObj_Click(object sender, RoutedEventArgs e)//remove a selected item from object list.
+        public void btn_removeObj_Click(object sender, RoutedEventArgs e)//remove a selected item from object list.
         {
             try
             {
@@ -66,12 +62,12 @@ namespace Benchmark
                         if (item.Name == object_key)
                         {
                             animal_zone.Children.Remove(item);
-                            remove_list(item.Name);
+                            Remove_list(item.Name);
                             break;
                         }
                     }
                     //Refresh the object list base on the lastest recent list.
-                    refresh_list();
+                    Refresh_list();
                 }
                 else
                 {
@@ -88,14 +84,14 @@ namespace Benchmark
 
         }
 
-        private void btn_searchType_Click(object sender, RoutedEventArgs e) //Search the object list base on the keyword that user entered;
+        public void btn_searchType_Click(object sender, RoutedEventArgs e) //Search the object list base on the keyword that user entered;
         {
             try
             {
                 if (tb_search.Text != "") // User must enter a keyword
                 {
                     string key = tb_search.Text; //Get a keyword
-                    refresh_list(key); //To invoke the refresh_list function and it will generate a new Listbox source for the object list base on the keyword.
+                    Refresh_list(key); //To invoke the refresh_list function and it will generate a new Listbox source for the object list base on the keyword.
                 }
                 else
                 {
@@ -107,17 +103,17 @@ namespace Benchmark
 
                 throw;
             }
-            
-            
+
+
         }
 
-        private void btn_sortType_ZA_Click(object sender, RoutedEventArgs e) //Sorting each animal's name on the object list by descending.
+        public void btn_sortType_ZA_Click(object sender, RoutedEventArgs e) //Sorting each animal's name on the object list by descending.
         {
             try
             {
                 //New a object of the Filter class and invoke the descending sort method to get the new items source.
                 Filter my_Search = new Filter(recent_list);
-                var sort_Result = my_Search.sort_ListZA();
+                var sort_Result = my_Search.Sort_ListZA();
 
                 //Set a new ItemsSource for object list.
                 object_list.ItemsSource = null;
@@ -128,16 +124,16 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
 
-        private void btn_sortType_AZ_Click(object sender, RoutedEventArgs e) //Sorting each animal's name on the object list by descending.
+        public void btn_sortType_AZ_Click(object sender, RoutedEventArgs e) //Sorting each animal's name on the object list by descending.
         {
             try
             {
                 //New a object of the Filter class and invoke the descending sort method to get the new items source.
                 Filter my_Search = new Filter(recent_list);
-                var sort_Result = my_Search.sort_ListAZ();
+                var sort_Result = my_Search.Sort_ListAZ();
 
                 //Set a new ItemsSource for object list.
                 object_list.ItemsSource = null;
@@ -148,10 +144,10 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
 
-        public void remove_list(string name)//Remove an item from the object list.
+        public void Remove_list(string name)//Remove an item from the object list.
         {
             try
             {
@@ -172,11 +168,11 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
 
 
-        public void refresh_list(string key = "")
+        public void Refresh_list(string key = "")
         //The function is used to refresh the object list and search the list. 
         //When the default value is empty, we can take it as getting the lastest list information.
         //When we invoke it by passing a value, it will return a list that match the keyword on the object list.
@@ -186,7 +182,7 @@ namespace Benchmark
             try
             {
                 Filter my_Search = new Filter(recent_list);
-                var search_Result = my_Search.search_List(key);
+                var search_Result = my_Search.Search_List(key);
                 object_list.ItemsSource = null;
                 object_list.ItemsSource = search_Result;
             }
@@ -195,10 +191,10 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
 
-        private void btn_clearAll_Click(object sender, RoutedEventArgs e) //Remove all objects and items.
+        public void btn_clearAll_Click(object sender, RoutedEventArgs e) //Remove all objects and items.
         {
             try
             {
@@ -212,19 +208,19 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
 
-        private void load_Data(int loadtype)
+        public void Load_Data(int loadtype)
         {
             try
             {
                 FileManager operation = new FileManager();
-                if (operation.load_List(loadtype))  //Invoke the load_list method of FileManager Class and passing a value that stand for load type;
+                if (operation.Load_List(loadtype))  //Invoke the load_list method of FileManager Class and passing a value that stand for load type;
                 {
-                    object_list.ItemsSource = operation.data;
+                    object_list.ItemsSource = operation.Data;
                 }
-                recreate_animal(operation.data);
+                Recreate_Animal(operation.Data);
 
                 MessageBox.Show("Done!", ":)");
             }
@@ -233,28 +229,28 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
 
-        private void btn_loadData_Previous_Click(object sender, RoutedEventArgs e)//Load the previous saving data.
+        public void btn_loadData_Previous_Click(object sender, RoutedEventArgs e)//Load the previous saving data.
         {
-            load_Data(0);
+            Load_Data(0);
         }
 
 
 
-        private void btn_showStatus_Click(object sender, RoutedEventArgs e) //Get the lastest information for the object list.
+        public void btn_showStatus_Click(object sender, RoutedEventArgs e) //Get the lastest information for the object list.
         {
-            refresh_list();
+            Refresh_list();
         }
 
-        private void btn_loadData_Inital_Click(object sender, RoutedEventArgs e) //Load the inital data to the object list
+        public void btn_loadData_Inital_Click(object sender, RoutedEventArgs e) //Load the inital data to the object list
         {
-            load_Data(1);
+            Load_Data(1);
         }
 
-        public void recreate_animal(ArrayList data) 
-            //This function is created for create new object by loading data.
+        public void Recreate_Animal(ArrayList data)
+        //This function is created for create new object by loading data.
         {
             try
             {
@@ -285,7 +281,7 @@ namespace Benchmark
                     MyClass animal = new MyClass(animaltype, animal_name, pt, speed_X, speed_Y, tag);
                     animal_zone.Children.Add(animal);
                     recent_list.Add(animal);
-                    refresh_list();
+                    Refresh_list();
                 }
             }
             catch (Exception)
@@ -294,21 +290,21 @@ namespace Benchmark
                 throw;
             }
 
-            
+
         }
 
-        private void btn_saveList_Click(object sender, RoutedEventArgs e) //Saving recent list into a txt file as data
+        public void btn_saveList_Click(object sender, RoutedEventArgs e) //Saving recent list into a txt file as data
         {
             try
             {
-                refresh_list();
+                Refresh_list();
                 ArrayList list_data = new ArrayList();
                 foreach (string data in object_list.Items)
                 {
                     list_data.Add(data);
                 }
                 FileManager operation = new FileManager(list_data);
-                operation.save_List();
+                operation.Save_List();
 
                 MessageBox.Show("Done!", ":)");
             }
@@ -317,7 +313,7 @@ namespace Benchmark
 
                 throw;
             }
-            
+
         }
     }
 
