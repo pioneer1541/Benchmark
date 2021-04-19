@@ -7,19 +7,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Name="bg_whole">
+        <!--This grid is the scene for the object to move around-->
         <Grid Name="bg_rectangle" Width="450" Height="400" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Image x:Name="bg_img" Source="./Resources/bg_img.png" Stretch="Fill" MouseDown="btnCreate_Img"></Image>
-            <Grid Name="animal_zone" Width="450" Height="400" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Grid Name="animal_zone" Width="450" Height="400" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"> <!--This grid is the area for putting anmations object into-->
 
             </Grid>
         </Grid>
 
-        <Grid>
+        <Grid><!--This grid is the area for object list and the searching function-->
             <ListBox Name="object_list" HorizontalAlignment="Left" Height="200" Width="300" Margin="480,10,0,0" VerticalAlignment="Top"/>
             <Label Name="lbl_text" Content="Enter Type For Search:" Margin="480,210,0,0" Width="140" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
             <TextBox Name="tb_search" Margin="620,215,0,0" Width="140" VerticalAlignment="Top" HorizontalAlignment="Left" ></TextBox>
         </Grid>
         <Grid>
+            <!--This grid includes the major function buttons-->
             <Button Name="btn_showStatus" Margin="480,240,0,0" Width="80" Height="40" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btn_showStatus_Click" >
                 <TextBlock TextWrapping="Wrap" Text="Show Status" FontSize="10"></TextBlock>
             </Button>
